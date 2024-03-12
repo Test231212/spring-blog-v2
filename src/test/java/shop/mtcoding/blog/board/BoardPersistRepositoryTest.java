@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.board;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,12 +10,24 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@Import(BoardNativeRepository.class)
+@Import(BoardPersistRepository.class)
 @DataJpaTest
-public class BoardNativeRepositoryTest {
+public class BoardPersistRepositoryTest {
 
     @Autowired // DI
-    private BoardNativeRepository boardNativeRepository;
+    private BoardPersistRepository boardNativeRepository;
+    private BoardPersistRepository boardPersistRepository;
+
+    @Test
+    public void save_test(){
+        // given
+        Board board = new Board("제목5", "내용5", "ssar");
+
+        // when
+        boardPersistRepository.save(board);
+        System.out.println("save_test :"+board);
+        // then
+    }
 
     @Test
     public void updateById_test(){

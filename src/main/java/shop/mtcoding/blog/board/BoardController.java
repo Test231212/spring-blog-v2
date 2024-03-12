@@ -3,7 +3,6 @@ package shop.mtcoding.blog.board;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,7 @@ import java.util.List;
 @Controller
 public class BoardController {
 
-    private final BoardNativeRepository boardNativeRepository;
+    private final BoardPersistRepository boardNativeRepository;
 
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, String title, String content, String username){
@@ -36,8 +35,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/save")
-    public String save(String title, String content, String username){
-        boardNativeRepository.save(title, content, username);
+    public String save(BoardRequest.SaveDTO reqDTO){
+        boardNativeRepository.save(reqDTO.toEntity());
         return "redirect:/";
     }
 
