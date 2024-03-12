@@ -1,5 +1,7 @@
 # 스프링부트 블로그 만들기 v2
 
+## get, post
+
 ## 기술스택
 
 - Springboot 3.2
