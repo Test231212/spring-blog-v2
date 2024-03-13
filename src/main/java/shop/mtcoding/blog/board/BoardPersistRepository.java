@@ -14,6 +14,12 @@ public class BoardPersistRepository {
     private final EntityManager em;
 
     @Transactional
+    public void updateById(int id, BoardRequest.UpdateDTO reqDTO){
+        Board board = findById(id);
+        board.update(reqDTO);
+    } // 더티체킹
+
+    @Transactional
     public void deleteByIdv2(int id) {
         Board board = findById(id);
         em.remove(board); // PC에 객체 지우고 트랜젝션 종료시 삭제 쿼리를 전송함
