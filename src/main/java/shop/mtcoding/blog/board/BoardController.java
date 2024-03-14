@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-@Controller
+@RequiredArgsConstructor // final이 붙은 친구들의 생성자를 만들어줘
+@Controller // new BoardController(IoC에서 BoardRepository를 찾아서 주입) -> IoC 컨테이너 등록
 public class BoardController {
 
     private final BoardRepository boardRepository;
@@ -38,7 +38,7 @@ public class BoardController {
 
     @GetMapping("/" )
     public String index(HttpServletRequest request) {
-        List<Board> boardList = boardRepository.findAllV3();
+        List<Board> boardList = boardRepository.findAll();
         request.setAttribute("boardList", boardList);
         return "index";
     }
