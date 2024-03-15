@@ -1,5 +1,6 @@
 package shop.mtcoding.blog.board;
 
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,6 +14,19 @@ public class BoardRepositoryTest {
 
     @Autowired
     private BoardRepository boardRepository;
+    private EntityManager em;
+
+    @Test
+    public void updateById_test(){
+    // given
+    int id = 1;
+    String title = "title1";
+    String content = "content1";
+    // when
+    boardRepository.updateById(id, title, content);
+    em.flush(); // 실제 코드에는 작성 할 필요가 없다. 트렌젝션이 종료될 꺼니까
+    // then
+    }
 
     @Test
     public void deleteById_test(){
