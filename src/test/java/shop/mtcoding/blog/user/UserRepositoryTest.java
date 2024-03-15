@@ -1,5 +1,6 @@
 package shop.mtcoding.blog.user;
 
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,35 @@ import org.springframework.context.annotation.Import;
 @DataJpaTest // Datasource(connection pool), EntityManager
 public class UserRepositoryTest {
 
+    @Autowired
+    private EntityManager em;
+
+    @Test
+    public void updateById_test() {
+        // given
+        int id = 1;
+        String password = "12345";
+        String email = "sssar@nate.com";
+
+        // when
+        userRepository.updateById(id, password, email);
+        em.flush(); // 실제 코드는 작성할 필요가 없다. 이유는? 트랜잭션 종료될꺼니까!!
+        // then
+    }
+
     @Autowired // DI
     private UserRepository userRepository;
+
+    @Test
+    public void findById_test(){
+        // given
+        int id = 1;
+
+        // when
+        userRepository.findById(id);
+
+        // then
+    }
 
     @Test
     public void findByUsername_test() {

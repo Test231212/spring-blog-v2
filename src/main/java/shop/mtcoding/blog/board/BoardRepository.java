@@ -17,10 +17,11 @@ public class BoardRepository {
     // update board_tb set content = ? where id = ?
     // update board_tb set title = ?, content = ? where id = ?
     @Transactional
-    public void updateById(int id, String title, String content){
+    public Board updateById(int id, String title, String content){
         Board board = findById(id);
         board.setTitle(title);
         board.setContent(content);
+        return board;
     } // 더티체킹
 
     @Transactional
