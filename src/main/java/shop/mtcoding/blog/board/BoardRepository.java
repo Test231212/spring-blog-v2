@@ -32,9 +32,9 @@ public class BoardRepository {
         query.executeUpdate();
     }
 
-    @Transactional
-    public void save(Board board){
+    public Board save(Board board){
         em.persist(board);
+        return board;
     }
 
     public List<Board> findAllV3(){
