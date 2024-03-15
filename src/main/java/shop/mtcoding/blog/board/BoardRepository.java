@@ -13,9 +13,6 @@ import java.util.List;
 public class BoardRepository {
     private final EntityManager em;
 
-    // update board_tb set title = ? where id = ?
-    // update board_tb set content = ? where id = ?
-    // update board_tb set title = ?, content = ? where id = ?
     @Transactional
     public Board updateById(int id, String title, String content){
         Board board = findById(id);
