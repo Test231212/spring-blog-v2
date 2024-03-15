@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 @RequiredArgsConstructor
 @Controller
 public class UserController {
@@ -22,7 +23,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO){
-        User sessionUser = userRepository.findByUsernameAndPassword(reqDTO);
+        User sessionUser = userRepository.findByUsernameAndPassword(reqDTO.getUsername(), reqDTO.getPassword());
 
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";

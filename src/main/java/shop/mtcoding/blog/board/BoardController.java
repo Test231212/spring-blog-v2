@@ -34,19 +34,19 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}/update-form")
-    public String updateForm(@PathVariable Integer id, HttpServletRequest request){
+    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
         Board board = boardRepository.findById(id);
         request.setAttribute("board", board);
         return "board/update-form";
     }
 
     @PostMapping("/board/{id}/delete")
-    public String delete(@PathVariable Integer id){
+    public String delete(@PathVariable Integer id) {
         boardRepository.deleteById(id);
         return "redirect:/";
     }
 
-    @GetMapping("/" )
+    @GetMapping("/")
     public String index(HttpServletRequest request) {
         List<Board> boardList = boardRepository.findAll();
         request.setAttribute("boardList", boardList);

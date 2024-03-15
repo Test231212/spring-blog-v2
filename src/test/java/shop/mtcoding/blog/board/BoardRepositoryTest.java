@@ -14,92 +14,50 @@ public class BoardRepositoryTest {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
     private EntityManager em;
 
     @Test
-    public void updateById_test(){
-    // given
-    int id = 1;
-    String title = "title1";
-    String content = "content1";
-    // when
-    boardRepository.updateById(id, title, content);
-    em.flush(); // 실제 코드에는 작성 할 필요가 없다. 트렌젝션이 종료될 꺼니까
-    // then
-    }
-
-    @Test
-    public void deleteById_test(){
-    // given
-    int id = 1;
-    // when
-    boardRepository.deleteById(id); // delete query 발동함
-    // then
-        System.out.println("deleteById_test : "+boardRepository.findAll().size());
-    }
-
-    @Test
-    public void findAllV2_test(){
-        List<Board> boardList = boardRepository.findAllV2();
-        System.out.println("findAllV2_test : 조회완료 쿼리 2번");
-        boardList.forEach(board -> {
-            System.out.println(board);
-        });
-    }
-
-    @Test
-    public void randomquery_test(){
-        int[] ids = {1,2};
-
-        // select u from User u where u.id in (?,?);
-        String q = "select u from User u where u.id in (";
-        for (int i=0; i<ids.length; i++){
-            if(i==ids.length-1){
-                q = q + "?)";
-            }else{
-                q = q + "?,";
-            }
-        }
-        System.out.println(q);
-    }
-
-    @Test
-    public void findAll_custom_inquery_test() {
-        List<Board> boardList = boardRepository.findAll();
-
-        int[] userIds = boardList.stream().mapToInt(board -> board.getUser().getId()).distinct().toArray();
-        for (int i : userIds){
-            System.out.println(i);
-        }
-
-        // select * from user_tb where id in (3,2,1,1);
-        // select * from user_tb where id in (3,2,1);
-    }
-
-    @Test
-    public void findAll_lazyloading_test() {
-        List<Board> boardList = boardRepository.findAll();
-        boardList.forEach(board -> {
-            System.out.println(board.getUser().getUsername());
-        });
-
-    }
-
-    @Test
-    public void findAll_test() {
+    public void updateById_test() {
         // given
+        int id = 1;
+        String title = "title1";
+        String content = "content1";
 
         // when
-        List<Board> boardList = boardRepository.findAll();
-        boardList.forEach(board -> {
-            System.out.println(board.getUser().getUsername());
-        });
-
+        boardRepository.updateById(id, title, content);
+        em.flush(); // 실제 코드는 작성할 필요가 없다. 이유는? 트랜잭션 종료될꺼니까!!
         // then
     }
 
     @Test
-    public void findByIdJoinUser_test(){
+    public void deleteById_test() {
+        // given
+        int id = 1;
+
+        // when
+        boardRepository.deleteById(id); // delete query 발동함
+
+        // then
+        System.out.println("deleteById_test : " + boardRepository.findAll().size());
+    }
+
+    @Test
+    public void findAll_lazyloading_test() { // default_batch_fetch_size : 10
+        List<Board> boardList = boardRepository.findAll();
+        boardList.forEach(board -> {
+            System.out.println(board.getUser().getUsername()); // lazy loading
+        });
+    }
+
+    @Test
+    public void findAll_test() {
+        List<Board> boardList = boardRepository.findAll();
+    }
+
+    @Test
+    public void findByIdJoinUser_test() {
         int id = 1;
 
         boardRepository.findByIdJoinUser(id);
@@ -108,11 +66,8 @@ public class BoardRepositoryTest {
     @Test
     public void findById_test() {
         int id = 1;
-        System.out.println("start - 1");
         Board board = boardRepository.findById(id);
-        System.out.println("start - 2");
         System.out.println(board.getUser().getId());
-        System.out.println("start - 3");
         System.out.println(board.getUser().getUsername());
     }
 }
