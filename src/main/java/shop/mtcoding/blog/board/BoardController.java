@@ -20,7 +20,6 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final BoardRepository boardRepository;
     private final HttpSession session;
 
     @PostMapping("/board/save")
