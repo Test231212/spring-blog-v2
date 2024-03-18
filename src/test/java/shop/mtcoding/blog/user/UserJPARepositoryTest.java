@@ -21,54 +21,54 @@ public class UserJPARepositoryTest {
 
     @Test
     public void findByUsernameAndPassword_test(){
-    // given
-    String username = "ssar";
-    String password = "password";
-    // when
-    userJPARepository.findByUsernameAndPassword(username, password);
-    // then
+        // given
+        String username = "ssar";
+        String password = "password";
+        // when
+        userJPARepository.findByUsernameAndPassword(username, password);
+        // then
 
     }
 
     @Test
     public void save_test(){
-    // given
-    User user = User.builder()
-            .username("happy")
-            .password("1234")
-            .email("happy@nate.com")
-            .build();
-    // when
-    userJPARepository.save(user);
-    // then
+        // given
+        User user = User.builder()
+                .username("happy")
+                .password("1234")
+                .email("happy@nate.com")
+                .build();
+        // when
+        userJPARepository.save(user);
+        // then
 
     }
 
     @Test
     public void findById_test(){
-    // given
-    int id = 1;
-    // when
-    Optional<User> userOP = userJPARepository.findById(id);
+        // given
+        int id = 1;
+        // when
+        Optional<User> userOP = userJPARepository.findById(id);
 
-    if(userOP.isPresent()){
-        User user = userOP.get();
-        System.out.println("findById_test : "+user.getUsername());
-    }
-    // then
+        if(userOP.isPresent()){
+            User user = userOP.get();
+            System.out.println("findById_test : "+user.getUsername());
+        }
+        // then
 
     }
 
     @Test
     public void findAll_test() throws JsonProcessingException {
-    // given
-    Sort sort = Sort.by(Sort.Direction.DESC, "id");
-    Pageable pageable = PageRequest.of(1, 2, sort);
-    // when
-    Page<User> userPG = userJPARepository.findAll(pageable);
-    // then
-    ObjectMapper om = new ObjectMapper();
-    String json = om.writeValueAsString(userPG);
-    System.out.println(json);
+        // given
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(1, 2, sort);
+        // when
+        Page<User> userPG = userJPARepository.findAll(pageable);
+        // then
+        ObjectMapper om = new ObjectMapper();
+        String json = om.writeValueAsString(userPG);
+        System.out.println(json);
     }
 }
