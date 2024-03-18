@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Import;
 @DataJpaTest // Datasource(connection pool), EntityManager
 public class UserRepositoryTest {
 
+    @Autowired // DI
+    private UserRepository userRepository;
+
     @Autowired
     private EntityManager em;
 
@@ -19,20 +22,18 @@ public class UserRepositoryTest {
     public void updateById_test() {
         // given
         int id = 1;
-        String password = "12345";
-        String email = "sssar@nate.com";
+        String password = "9999";
+        String email = "ssar@gmail.com";
 
         // when
         userRepository.updateById(id, password, email);
-        em.flush(); // 실제 코드는 작성할 필요가 없다. 이유는? 트랜잭션 종료될꺼니까!!
+        em.flush();
+
         // then
     }
 
-    @Autowired // DI
-    private UserRepository userRepository;
-
     @Test
-    public void findById_test(){
+    public void findById_test() {
         // given
         int id = 1;
 
