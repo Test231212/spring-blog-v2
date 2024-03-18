@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.user;
 
-import jakarta.persistence.NoResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +17,15 @@ import shop.mtcoding.blog._core.errors.exception.Exception401;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
     private final HttpSession session;
+
+    @GetMapping("/user/update-form")
+    public String updateForm(HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User user = userService.회원조회(sessionUser.getId());
+        request.setAttribute("user", user);
+        return "user/update-form";
+    }
 
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO reqDTO) {
@@ -32,7 +38,6 @@ public class UserController {
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
         userService.회원가입(reqDTO);
-
         return "redirect:/";
     }
 
@@ -51,14 +56,6 @@ public class UserController {
     @GetMapping("/login-form")
     public String loginForm() {
         return "user/login-form";
-    }
-
-    @GetMapping("/user/update-form")
-    public String updateForm(HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        User user = userService.회원수정폼(sessionUser.getId());
-        request.setAttribute("user", user);
-        return "user/update-form";
     }
 
     @GetMapping("/logout")
