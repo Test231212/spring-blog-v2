@@ -21,6 +21,7 @@ public class Board {
     private String title;
     private String content;
     private String username;
+    private String password;
     private Timestamp createdAt;
 
     @Builder
