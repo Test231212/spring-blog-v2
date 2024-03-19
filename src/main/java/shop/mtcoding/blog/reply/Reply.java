@@ -27,7 +27,7 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
-    @CreationTimestamp // pc -> db (날짜주입)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder

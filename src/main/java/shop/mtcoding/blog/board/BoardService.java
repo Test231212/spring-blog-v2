@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception403;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
+import shop.mtcoding.blog.reply.Reply;
+import shop.mtcoding.blog.reply.ReplyJPARepository;
 import shop.mtcoding.blog.user.User;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardJPARepository boardJPARepository;
+    private final ReplyJPARepository replyJPARepository;
 
     public Board 글조회(int boardId){
         Board board = boardJPARepository.findById(boardId)
@@ -44,7 +47,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void 글삭제(Integer boardId, int sessionUserId) {
+    public void 글삭제(int boardId, int sessionUserId) {
         Board board = boardJPARepository.findById(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다"));
 
@@ -73,6 +76,7 @@ public class BoardService {
         }
 
         board.setOwner(isOwner);
+
 
         return board;
     }
